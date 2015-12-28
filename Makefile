@@ -1,8 +1,10 @@
 C = gcc
 ASM = nasm
+LD = ar
 
-CFLAGS =
-ASMFLAGS = -f elf64 -g3
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = rc
+ASMFLAGS = -f macho64
 
 SRCS_C = 	main.c
 SRCS_ASM = 	ft_bzero.s \
@@ -15,6 +17,7 @@ SRCS_ASM = 	ft_bzero.s \
 			ft_toupper.s \
 			ft_tolower.s \
 			ft_puts.s \
+			ft_putstr.s \
 			ft_strlen.s \
 			ft_memset.s \
 			ft_memcpy.s \
@@ -23,15 +26,12 @@ SRCS_ASM = 	ft_bzero.s \
 
 OBJS = $(SRCS_C:.c=.o) $(SRCS_ASM:.s=.o)
 
-NAME = libfts
+NAME = libfts.a
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(C) -o $@ $^
-
-%.o: %.c
-	$(C) -o $@ -c $< $(CFLAGS) -g3
+	$(LD) $(LDFLAGS) $@ $^
 
 %.o: %.s
 	$(ASM) $(ASMFLAGS) $<
@@ -41,5 +41,11 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
+	rm -f a.out
+
+test: all main.c
+	$(CC) $(CFLAGS) main.c libfts.a
 
 re: fclean all
+
+.PHONY: all clean fclean re test

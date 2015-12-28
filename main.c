@@ -5,21 +5,55 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-extern void	_ft_bzero(void *s, size_t len);
-extern char *_ft_strcat(char *dest, const char *src);
-extern int	_ft_isalpha(int c);
-extern int	_ft_isdigit(int c);
-extern int	_ft_isalnum(int c);
-extern int	_ft_isascii(int c);
-extern int 	_ft_isprint(int c);
-extern int	_ft_toupper(int c);
-extern int 	_ft_tolower(int c);
-extern int	_ft_puts(const char *s);
-extern int	_ft_strlen(const char *s);
-extern void	*_ft_memset(void *s, int c, size_t n);
-extern void	*_ft_memcpy(void *dest, const void *src, size_t n);
-extern char *_ft_strdup(const char *s);
-extern void	ft_cat(int fd);
+#ifdef __LINUX__
+	extern void	_ft_bzero(void *s, size_t len);
+	extern char *_ft_strcat(char *dest, const char *src);
+	extern int	_ft_isalpha(int c);
+	extern int	_ft_isdigit(int c);
+	extern int	_ft_isalnum(int c);
+	extern int	_ft_isascii(int c);
+	extern int 	_ft_isprint(int c);
+	extern int	_ft_toupper(int c);
+	extern int 	_ft_tolower(int c);
+	extern int	_ft_puts(const char *s);
+	extern int	_ft_strlen(const char *s);
+	extern void	*_ft_memset(void *s, int c, size_t n);
+	extern void	*_ft_memcpy(void *dest, const void *src, size_t n);
+	extern char *_ft_strdup(const char *s);
+	extern void	_ft_cat(int fd);
+#else
+	extern void	ft_bzero(void *s, size_t len);
+	extern char *ft_strcat(char *dest, const char *src);
+	extern int	ft_isalpha(int c);
+	extern int	ft_isdigit(int c);
+	extern int	ft_isalnum(int c);
+	extern int	ft_isascii(int c);
+	extern int 	ft_isprint(int c);
+	extern int	ft_toupper(int c);
+	extern int 	ft_tolower(int c);
+	extern int	ft_puts(const char *s);
+	extern size_t	ft_strlen(const char *s);
+	extern void	*ft_memset(void *s, int c, size_t n);
+	extern void	*ft_memcpy(void *dest, const void *src, size_t n);
+	extern char *ft_strdup(const char *s);
+	extern void	ft_cat(int fd);
+
+	#define _ft_bzero ft_bzero
+	#define _ft_strcat ft_strcat
+	#define _ft_isalpha ft_isalpha
+	#define _ft_isdigit ft_isdigit
+	#define _ft_isalnum ft_isalnum
+	#define _ft_isascii ft_isascii
+	#define _ft_isprint ft_isprint
+	#define _ft_toupper ft_toupper
+	#define _ft_tolower ft_tolower
+	#define _ft_puts	ft_puts
+	#define _ft_strlen	ft_strlen
+	#define _ft_memset	ft_memset
+	#define _ft_memcpy	ft_memcpy
+	#define _ft_strdup 	ft_strdup
+	#define _ft_cat		ft_cat
+#endif
 
 void	check(const char *name, int i, int (*f)(int), int (*f2)(int), int print_char)
 {
@@ -37,11 +71,11 @@ int		main(int ac, char **av)
 {
 	char		str[] = "bonjour";
 	int			i;
-	struct stat	*st;
+	
 	_ft_bzero(str, sizeof(str) - 1);
 	printf("str(%s)\n", _ft_strcat(str, "test"));
 	printf("str(%s)\n", _ft_strcat(str, "2"));
-	for (i = 0; i < sizeof(str) - 1; ++i) {
+	for (i = 0; i < (int)sizeof(str) - 1; ++i) {
 		printf("str[%d]: '%c' - isalpha: %d - isdigit: %d - isalnum: %d - isascii: %d\n", i, str[i], _ft_isalpha(str[i]), _ft_isdigit(str[i]), _ft_isalnum(str[i]), _ft_isascii(str[i]));
 	}
 	for (i = 0; i < 256; ++i)
@@ -84,5 +118,11 @@ int		main(int ac, char **av)
 			printf("\n\n");
 		}
 	}
+	printf("before ft cat 0 \n");
+	_ft_cat(0);
+	printf("after\n");
+	printf("before ft cat random \n");
+	_ft_cat(161461451);
+	printf("after\n");
 	return (0);
 }

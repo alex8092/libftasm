@@ -1,6 +1,6 @@
 global _ft_strdup
 extern _ft_strlen
-extern malloc
+extern _malloc
 extern _ft_memcpy
 
 ; char	*ft_strdup(const char *s)
@@ -15,7 +15,7 @@ _ft_strdup:
 	inc rax
 	mov [rbp - 0x10], rax
 	mov rdi, rax
-	call malloc
+	call _malloc
 	mov rdi, rax
 	mov rsi, [rbp - 0x8]
 	mov rdx, [rbp - 0x10]
