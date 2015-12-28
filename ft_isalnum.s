@@ -6,7 +6,7 @@ extern _ft_isdigit
 
 _ft_isalnum:
 	call _ft_isalpha
-	or al, al
+	or rax, rax
 	jnz .end
 	call _ft_isdigit
 	.end:

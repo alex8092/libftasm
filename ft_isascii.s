@@ -3,9 +3,10 @@ global _ft_isascii
 ; int	ft_isascii(int c);
 
 _ft_isascii:
-	cmp rdi, 0
+	mov rax, rdi
+	cmp rax, 0
 	jnge .no
-	cmp rdi, 127
+	cmp rax, 127
 	jnle .no
 	mov rax, 1
 	ret

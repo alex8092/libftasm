@@ -3,13 +3,14 @@ global _ft_isalpha
 ;	int ft_isalpha(int c)
 
 _ft_isalpha:
-	cmp rdi, 65
+	mov rax, rdi
+	cmp rax, 65
 	jnge .no
-	cmp rdi, 90
+	cmp rax, 90
 	jle .yes
-	cmp rdi, 97
+	cmp rax, 97
 	jnge .no
-	cmp rdi, 122
+	cmp rax, 122
 	jle .yes
 	.no:
 		mov rax, 0
