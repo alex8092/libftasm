@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -37,6 +38,7 @@
 	extern void	*ft_memcpy(void *dest, const void *src, size_t n);
 	extern char *ft_strdup(const char *s);
 	extern void	ft_cat(int fd);
+	extern char	*ft_strchr(const char *s, int c);
 
 	#define _ft_bzero ft_bzero
 	#define _ft_strcat ft_strcat
@@ -53,6 +55,7 @@
 	#define _ft_memcpy	ft_memcpy
 	#define _ft_strdup 	ft_strdup
 	#define _ft_cat		ft_cat
+	#define _ft_strchr	ft_strchr
 #endif
 
 void	check(const char *name, int i, int (*f)(int), int (*f2)(int), int print_char)
@@ -124,5 +127,8 @@ int		main(int ac, char **av)
 	printf("before ft cat random \n");
 	_ft_cat(161461451);
 	printf("after\n");
+	if (strchr("bonjour", 'j') != ft_strchr("bonjour", 'j'))
+		printf("fail on strchr\n");
+	else if (strchr("bonjour", 'z') != ft_strchr("bonjour", 'z'))
 	return (0);
 }

@@ -11,7 +11,13 @@ _ft_strdup:
 	sub rsp, 0x20
 	mov qword [rbp - 0x8], rdi
 	mov qword [rbp - 0x10], 0
-	call _ft_strlen
+	xor rcx, rcx
+	not rcx
+	xor rax, rax
+	repne scasb
+	not rcx
+	dec rcx
+	mov rax, rcx
 	inc rax
 	mov [rbp - 0x10], rax
 	mov rdi, rax
